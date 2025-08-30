@@ -1,0 +1,80 @@
+const questions = {
+  easy: [
+    { q: 'sin(30°)', a: '1/2', options: ['√3/2','1/2','√2/2','1'] },
+    { q: 'cos(45°)', a: '√2/2', options: ['1/2','√3/2','√2/2','0'] },
+    { q: 'tan(60°)', a: '√3', options: ['√3','1','√3/3','0'] },
+  ],
+  advanced: [
+    { q: 'sin(150°)', a: '1/2', options: ['-√3/2','1/2','√2/2','-1/2'] },
+    { q: 'cos(210°)', a: '-√3/2', options: ['-√3/2','√3/2','-1/2','1/2'] },
+  ],
+  radians: [
+    { q: 'sin(π/6)', a: '1/2', options: ['1/2','√3/2','√2/2','0'] },
+    { q: 'cos(π/3)', a: '1/2', options: ['1','1/2','√2/2','√3/2'] },
+    { q: 'tan(π/4)', a: '1', options: ['0','√3','1','√3/3'] },
+  ]
+};
+
+let currentSet = [];
+let currentIndex = 0;
+let startTime;
+let times = [];
+let correct = 0;
+
+function startQuiz(level) {
+  document.getElementById('menu').classList.add('hidden');
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  currentSet = questions[level];
+  currentIndex = 0;
+  times = [];
+  correct = 0;
+  nextQuestion();
+}
+
+function nextQuestion() {
+  if (currentIndex >= currentSet.length) return showResults();
+  const qObj = currentSet[currentIndex];
+  document.getElementById('question').textContent = qObj.q;
+  const ansDiv = document.getElementById('answers');
+  ansDiv.innerHTML = '';
+  qObj.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.onclick = () => checkAnswer(btn);
+    ansDiv.appendChild(btn);
+  });
+  startTime = performance.now();
+}
+
+function checkAnswer(btn) {
+  const qObj = currentSet[currentIndex];
+  btn.classList.add('flipped');
+  btn.setAttribute('data-answer', qObj.a);
+
+  const endTime = performance.now();
+  const timeTaken = ((endTime - startTime) / 1000).toFixed(2);
+  times.push(parseFloat(timeTaken));
+  if (btn.textContent === qObj.a) correct++;
+
+  setTimeout(() => {
+    currentIndex++;
+    nextQuestion();
+  }, 1000);
+
+  document.getElementById('time').textContent = timeTaken;
+}
+
+function showResults() {
+  document.getElementById('quiz').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  document.getElementById('score').textContent = `Score: ${correct} / ${currentSet.length}`;
+  const avg = (times.reduce((a,b)=>a+b,0) / times.length).toFixed(2);
+  document.getElementById('avgTime').textContent = `Average time per question: ${avg}s`;
+}
+
+function backToMenu() {
+  document.getElementById('quiz').classList.add('hidden');
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('menu').classList.remove('hidden');
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grunge Trig Trainer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <h1 class="title">TRIG TRAINER</h1>
+
+    <div id="menu">
+      <button class="menu-btn" onclick="startQuiz('easy')">Exact Values (Easy)</button>
+      <button class="menu-btn" onclick="startQuiz('advanced')">Beyond π/2 (Advanced)</button>
+      <button class="menu-btn" onclick="startQuiz('radians')">Radians Only</button>
+    </div>
+
+    <div id="quiz" class="hidden">
+      <div class="question" id="question"></div>
+      <div class="answers" id="answers"></div>
+      <div class="timer">⏱ <span id="time">0.0</span>s</div>
+      <button class="menu-btn" onclick="backToMenu()">Back to Menu</button>
+    </div>
+
+    <div id="result" class="hidden">
+      <h2>Results</h2>
+      <p id="score"></p>
+      <p id="avgTime"></p>
+      <button class="menu-btn" onclick="backToMenu()">Back to Menu</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

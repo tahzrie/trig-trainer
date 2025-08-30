@@ -1,0 +1,15 @@
+{
+  "name": "Trig Trainer",
+  "short_name": "Trig",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#111",
+  "theme_color": "#0f0",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/ios-filled/100/00ff00/triangle.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
