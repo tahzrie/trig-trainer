@@ -12,6 +12,11 @@ const questions = {
     { q: 'sin(π/6)', a: '1/2', options: ['1/2','√3/2','√2/2','0'] },
     { q: 'cos(π/3)', a: '1/2', options: ['1','1/2','√2/2','√3/2'] },
     { q: 'tan(π/4)', a: '1', options: ['0','√3','1','√3/3'] },
+  ],
+  hidden: [
+    { q: 'sin(30°)', a: '1/2' },
+    { q: 'cos(45°)', a: '√2/2' },
+    { q: 'tan(60°)', a: '√3' },
   ]
 };
 
@@ -36,14 +41,23 @@ function nextQuestion() {
   if (currentIndex >= currentSet.length) return showResults();
   const qObj = currentSet[currentIndex];
   document.getElementById('question').textContent = qObj.q;
+
   const ansDiv = document.getElementById('answers');
   ansDiv.innerHTML = '';
-  qObj.options.forEach(opt => {
+
+  if (currentSet === questions.hidden) {
     const btn = document.createElement('button');
-    btn.textContent = opt;
-    btn.onclick = () => checkAnswer(btn);
+    btn.textContent = 'Show Answer';
+    btn.onclick = () => { btn.textContent = `Answer: ${qObj.a}`; };
     ansDiv.appendChild(btn);
-  });
+  } else {
+    qObj.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.textContent = opt;
+      btn.onclick = () => checkAnswer(btn);
+      ansDiv.appendChild(btn);
+    });
+  }
   startTime = performance.now();
 }
 
